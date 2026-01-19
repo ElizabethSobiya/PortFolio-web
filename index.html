@@ -1,957 +1,1117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elizabeth Sobiya - Full Stack Engineer</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #ec4899;
-            --dark: #0f172a;
-            --dark-light: #1e293b;
-            --text: #cbd5e1;
-            --text-dark: #64748b;
-            --accent: #22d3ee;
-        }
+      :root {
+        --primary: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary: #ec4899;
+        --dark: #0f172a;
+        --dark-light: #1e293b;
+        --text: #cbd5e1;
+        --text-dark: #64748b;
+        --accent: #22d3ee;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--dark);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--dark);
+        color: var(--text);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 5%;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
-        }
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 5%;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+      }
 
-        nav .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      nav .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
 
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        transition: all 0.3s;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8rem 5% 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(99, 102, 241, 0.15),
+          transparent
+        );
+        top: -250px;
+        right: -250px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .hero-content {
+        max-width: 1200px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .hero-text h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #fff, var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: slideInLeft 0.8s ease-out;
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .hero-text .subtitle {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+        animation: slideInLeft 0.8s ease-out 0.2s backwards;
+      }
+
+      .hero-text p {
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        margin-bottom: 2rem;
+        animation: slideInLeft 0.8s ease-out 0.4s backwards;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        animation: slideInLeft 0.8s ease-out 0.6s backwards;
+      }
+
+      .btn {
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--text);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-secondary:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      .hero-image {
+        position: relative;
+        animation: slideInRight 0.8s ease-out;
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .image-wrapper {
+        position: relative;
+        width: 350px;
+        height: 350px;
+        margin: 0 auto;
+      }
+
+      .image-wrapper::before {
+        content: "";
+        position: absolute;
+        inset: -10px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 50%;
+        animation: rotate 8s linear infinite;
+        z-index: -1;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid var(--dark);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .social-links a {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: var(--dark-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text);
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .social-links a:hover {
+        background: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      /* Section Styles */
+      section {
+        padding: 5rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 2px;
+      }
+
+      /* Experience Section */
+      .timeline {
+        position: relative;
+        padding-left: 50px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background: linear-gradient(180deg, var(--primary), var(--secondary));
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: var(--dark-light);
+        border-radius: 12px;
+        border-left: 3px solid var(--primary);
+        transition: all 0.3s;
+        opacity: 0;
+        animation: fadeInUp 0.6s ease-out forwards;
+      }
+
+      .timeline-item:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .timeline-item:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .timeline-item:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .timeline-item:hover {
+        transform: translateX(10px);
+        border-left-color: var(--secondary);
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -53px;
+        top: 30px;
+        width: 20px;
+        height: 20px;
+        background: var(--primary);
+        border-radius: 50%;
+        border: 4px solid var(--dark);
+      }
+
+      .timeline-date {
+        color: var(--accent);
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-item h3 {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-item .company {
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .timeline-item ul {
+        margin-left: 1.5rem;
+        color: var(--text-dark);
+      }
+
+      .timeline-item li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Skills Section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .skill-category {
+        background: var(--dark-light);
+        padding: 2rem;
+        border-radius: 12px;
+        transition: all 0.3s;
+      }
+
+      .skill-category:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+      }
+
+      .skill-category h3 {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .skill-tag {
+        padding: 0.5rem 1rem;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: var(--text);
+        transition: all 0.3s;
+      }
+
+      .skill-tag:hover {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .project-card {
+        background: var(--dark-light);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s;
+        border: 1px solid transparent;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+      }
+
+      .project-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s;
+      }
+
+      .project-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .project-info {
+        padding: 1.5rem;
+      }
+
+      .project-info h3 {
+        color: white;
+        margin-bottom: 0.8rem;
+      }
+
+      .project-info p {
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .project-tag {
+        padding: 0.3rem 0.8rem;
+        background: rgba(99, 102, 241, 0.2);
+        border-radius: 15px;
+        font-size: 0.8rem;
+        color: var(--accent);
+      }
+
+      /* Contact Section */
+      .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: var(--dark-light);
+        border-radius: 12px;
+        transition: all 0.3s;
+      }
+
+      .contact-item:hover {
+        transform: translateX(10px);
+        background: rgba(99, 102, 241, 0.1);
+      }
+
+      .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 1rem;
+        background: var(--dark-light);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 8px;
+        color: var(--text);
+        font-family: inherit;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 150px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark-light);
+        padding: 2rem 5%;
+        text-align: center;
+        border-top: 1px solid rgba(99, 102, 241, 0.1);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8rem 5% 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent);
-            top: -250px;
-            right: -250px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+          display: none;
         }
 
         .hero-content {
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+          grid-template-columns: 1fr;
+          text-align: center;
         }
 
         .hero-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: slideInLeft 0.8s ease-out;
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .hero-text .subtitle {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            animation: slideInLeft 0.8s ease-out 0.2s backwards;
-        }
-
-        .hero-text p {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-            animation: slideInLeft 0.8s ease-out 0.4s backwards;
+          font-size: 2.5rem;
         }
 
         .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            animation: slideInLeft 0.8s ease-out 0.6s backwards;
+          justify-content: center;
         }
 
-        .btn {
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+        .contact-content {
+          grid-template-columns: 1fr;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .hero-image {
-            position: relative;
-            animation: slideInRight 0.8s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .image-wrapper {
-            position: relative;
-            width: 350px;
-            height: 350px;
-            margin: 0 auto;
-        }
-
-        .image-wrapper::before {
-            content: '';
-            position: absolute;
-            inset: -10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            animation: rotate 8s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 5px solid var(--dark);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-links a {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--dark-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        /* Section Styles */
-        section {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        /* Experience Section */
         .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: var(--dark-light);
-            border-radius: 12px;
-            border-left: 3px solid var(--primary);
-            transition: all 0.3s;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .timeline-item:nth-child(2) { animation-delay: 0.1s; }
-        .timeline-item:nth-child(3) { animation-delay: 0.2s; }
-        .timeline-item:nth-child(4) { animation-delay: 0.3s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .timeline-item:hover {
-            transform: translateX(10px);
-            border-left-color: var(--secondary);
+          padding-left: 30px;
         }
 
         .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -53px;
-            top: 30px;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            border: 4px solid var(--dark);
+          left: -33px;
         }
-
-        .timeline-date {
-            color: var(--accent);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-item h3 {
-            font-size: 1.5rem;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-item .company {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .timeline-item ul {
-            margin-left: 1.5rem;
-            color: var(--text-dark);
-        }
-
-        .timeline-item li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--dark-light);
-            padding: 2rem;
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
-        }
-
-        .skill-category h3 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.3rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
-        .skill-tag {
-            padding: 0.5rem 1rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: var(--text);
-            transition: all 0.3s;
-        }
-
-        .skill-tag:hover {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--dark-light);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
-        }
-
-        .project-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .project-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .project-info {
-            padding: 1.5rem;
-        }
-
-        .project-info h3 {
-            color: white;
-            margin-bottom: 0.8rem;
-        }
-
-        .project-info p {
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-tag {
-            padding: 0.3rem 0.8rem;
-            background: rgba(99, 102, 241, 0.2);
-            border-radius: 15px;
-            font-size: 0.8rem;
-            color: var(--accent);
-        }
-
-        /* Contact Section */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: var(--dark-light);
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-
-        .contact-item:hover {
-            transform: translateX(10px);
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            padding: 1rem;
-            background: var(--dark-light);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark-light);
-            padding: 2rem 5%;
-            text-align: center;
-            border-top: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .cta-buttons {
-                justify-content: center;
-            }
-
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-
-            .timeline {
-                padding-left: 30px;
-            }
-
-            .timeline-item::before {
-                left: -33px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navigation -->
     <nav>
-        <div class="container">
-            <div class="logo">Elizabeth Sobiya</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+      <div class="container">
+        <div class="logo">Elizabeth Sobiya</div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Elizabeth Sobiya</h1>
-                <p class="subtitle">Full Stack MERN Engineer</p>
-                <p>Crafting seamless, scalable digital experiences with 3+ years of expertise in React.js, Node.js, and modern web technologies. Specialized in building production-ready applications that drive business impact.</p>
-                <div class="cta-buttons">
-                    <a href="./Sobiya_resume.pdf" class="btn btn-primary" target="_blank">Download CV</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-                <div class="social-links">
-                    <a href="https://github.com/ElizabethSobiya" target="_blank">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/elizabeth-sobiya/" target="_blank">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    </a>
-                    <a href="mailto:ellizabethsobiya@gmail.com">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="image-wrapper">
-                    <img src="./Sophia -2.jpeg" alt="Elizabeth Sobiya">
-                </div>
-            </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Elizabeth Sobiya</h1>
+          <p class="subtitle">Full Stack MERN Engineer</p>
+          <p>
+            Crafting seamless, scalable digital experiences with 3+ years of
+            expertise in React.js, Node.js, and modern web technologies.
+            Specialized in building production-ready applications that drive
+            business impact.
+          </p>
+          <div class="cta-buttons">
+            <a
+              href="./Sobiya_resume.pdf"
+              class="btn btn-primary"
+              target="_blank"
+              >Download CV</a
+            >
+            <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+          </div>
+          <div class="social-links">
+            <a href="https://github.com/ElizabethSobiya" target="_blank">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/elizabeth-sobiya/"
+              target="_blank"
+            >
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                />
+              </svg>
+            </a>
+            <a href="mailto:ellizabethsobiya@gmail.com">
+              <svg
+                width="20"
+                height="20"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
+        <div class="hero-image">
+          <div class="image-wrapper">
+            <img src="./Sophia -2.jpeg" alt="Elizabeth Sobiya" />
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Experience Section -->
     <section id="experience">
-        <h2 class="section-title">Professional Journey</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">June 2024 - Present</div>
-                <h3>Software Engineer</h3>
-                <p class="company">Nighthack Labs</p>
-                <ul>
-                    <li>Leading frontend development for Land Valuation System used by banking clients, managing a 3-member team</li>
-                    <li>Built AI-powered Document Analysis Platform using Next.js and OpenAI APIs, reducing user interaction time by 40%</li>
-                    <li>Developed Gold Valuation System with live rate tracking and payment integration, reducing transaction errors by 25%</li>
-                    <li>Created Waste Management Platform improving data retrieval speed by 30% through optimized FastAPI integration</li>
-                </ul>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Jan 2024 - April 2024</div>
-                <h3>Software Developer (Part-time)</h3>
-                <p class="company">ViviMart</p>
-                <ul>
-                    <li>Architected and built mobile applications coordinating with cross-functional teams</li>
-                    <li>Maintained high-quality product standards across all deliverables</li>
-                </ul>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Apr 2023 - Sep 2023</div>
-                <h3>Software Developer</h3>
-                <p class="company">Itera Solutions</p>
-                <ul>
-                    <li>Developed Full Stack MERN applications achieving 75% faster page load times</li>
-                    <li>Increased team efficiency by 30% and reduced project delivery timelines by 25% through agile processes</li>
-                    <li>Implemented RESTful APIs with PostgreSQL using Sequelize for seamless data management</li>
-                    <li>Enhanced testing efficiency by 30% through Jasmine automation testing</li>
-                </ul>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Nov 2022 - Feb 2023</div>
-                <h3>Frontend Developer Intern</h3>
-                <p class="company">Futuryze Digital Venture Studio</p>
-                <ul>
-                    <li>Delivered mobile-responsive pages using Tailwind CSS and React-Gatsby</li>
-                    <li>Achieved 50% improvement in website performance through LazyLoading and optimized WebP images</li>
-                </ul>
-            </div>
+      <h2 class="section-title">Professional Journey</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">June 2024 - Present</div>
+          <h3>Software Engineer</h3>
+          <p class="company">Nighthack Labs</p>
+          <ul>
+            <li>
+              Leading frontend development for Land Valuation System used by
+              banking clients, managing a 3-member team
+            </li>
+            <li>
+              Built AI-powered Document Analysis Platform using Next.js and
+              OpenAI APIs, reducing user interaction time by 40%
+            </li>
+            <li>
+              Developed Gold Valuation System with live rate tracking and
+              payment integration, reducing transaction errors by 25%
+            </li>
+            <li>
+              Created Waste Management Platform improving data retrieval speed
+              by 30% through optimized FastAPI integration
+            </li>
+          </ul>
         </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 2024 - April 2024</div>
+          <h3>Software Developer (Part-time)</h3>
+          <p class="company">ViviMart</p>
+          <ul>
+            <li>
+              Architected and built mobile applications coordinating with
+              cross-functional teams
+            </li>
+            <li>
+              Maintained high-quality product standards across all deliverables
+            </li>
+          </ul>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Apr 2023 - Sep 2023</div>
+          <h3>Software Developer</h3>
+          <p class="company">Itera Solutions</p>
+          <ul>
+            <li>
+              Developed Full Stack MERN applications achieving 75% faster page
+              load times
+            </li>
+            <li>
+              Increased team efficiency by 30% and reduced project delivery
+              timelines by 25% through agile processes
+            </li>
+            <li>
+              Implemented RESTful APIs with PostgreSQL using Sequelize for
+              seamless data management
+            </li>
+            <li>
+              Enhanced testing efficiency by 30% through Jasmine automation
+              testing
+            </li>
+          </ul>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Nov 2022 - Feb 2023</div>
+          <h3>Frontend Developer Intern</h3>
+          <p class="company">Futuryze Digital Venture Studio</p>
+          <ul>
+            <li>
+              Delivered mobile-responsive pages using Tailwind CSS and
+              React-Gatsby
+            </li>
+            <li>
+              Achieved 50% improvement in website performance through
+              LazyLoading and optimized WebP images
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- Skills Section -->
     <section id="skills">
-        <h2 class="section-title">Technical Arsenal</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3>Frontend Development</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">React.js</span>
-                    <span class="skill-tag">Next.js</span>
-                    <span class="skill-tag">TypeScript</span>
-                    <span class="skill-tag">Redux Toolkit</span>
-                    <span class="skill-tag">Zustand</span>
-                    <span class="skill-tag">Material UI</span>
-                    <span class="skill-tag">Tailwind CSS</span>
-                    <span class="skill-tag">Gatsby</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3>Backend & Database</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Node.js</span>
-                    <span class="skill-tag">Express.js</span>
-                    <span class="skill-tag">MongoDB</span>
-                    <span class="skill-tag">PostgreSQL</span>
-                    <span class="skill-tag">MySQL</span>
-                    <span class="skill-tag">Sequelize</span>
-                    <span class="skill-tag">GraphQL</span>
-                    <span class="skill-tag">RESTful API</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3>Mobile & Cross-Platform</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">React Native</span>
-                    <span class="skill-tag">Flutter</span>
-                    <span class="skill-tag">Android Studio</span>
-                    <span class="skill-tag">Xcode</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3>DevOps & Tools</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">Git/GitHub</span>
-                    <span class="skill-tag">AWS</span>
-                    <span class="skill-tag">Netlify</span>
-                    <span class="skill-tag">VSCode</span>
-                    <span class="skill-tag">Postman</span>
-                    <span class="skill-tag">Chrome DevTools</span>
-                    <span class="skill-tag">Jasmine</span>
-                </div>
-            </div>
-            <div class="skill-category">
-                <h3>AI & Productivity</h3>
-                <div class="skill-tags">
-                    <span class="skill-tag">ChatGPT</span>
-                    <span class="skill-tag">GitHub Copilot</span>
-                    <span class="skill-tag">Claude</span>
-                    <span class="skill-tag">OpenAI APIs</span>
-                    <span class="skill-tag">Metabase</span>
-                </div>
-            </div>
+      <h2 class="section-title">Technical Arsenal</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Frontend Development</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">React.js</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Redux Toolkit</span>
+            <span class="skill-tag">Zustand</span>
+            <span class="skill-tag">Material UI</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">Gatsby</span>
+          </div>
         </div>
+        <div class="skill-category">
+          <h3>Backend & Database</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Express.js</span>
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">Sequelize</span>
+            <span class="skill-tag">GraphQL</span>
+            <span class="skill-tag">RESTful API</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Mobile & Cross-Platform</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">React Native</span>
+            <span class="skill-tag">Flutter</span>
+            <span class="skill-tag">Android Studio</span>
+            <span class="skill-tag">Xcode</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>DevOps & Tools</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">Git/GitHub</span>
+            <span class="skill-tag">AWS</span>
+            <span class="skill-tag">Netlify</span>
+            <span class="skill-tag">VSCode</span>
+            <span class="skill-tag">Postman</span>
+            <span class="skill-tag">Chrome DevTools</span>
+            <span class="skill-tag">Jasmine</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>AI & Productivity</h3>
+          <div class="skill-tags">
+            <span class="skill-tag">ChatGPT</span>
+            <span class="skill-tag">GitHub Copilot</span>
+            <span class="skill-tag">Claude</span>
+            <span class="skill-tag">OpenAI APIs</span>
+            <span class="skill-tag">Metabase</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <img src="./namaste.png" alt="Swiggy Clone">
-                <div class="project-info">
-                    <h3>Food Ordering App (Swiggy Clone)</h3>
-                    <p>Full-featured food ordering application with cart management, menu filtering, and real-time updates.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">React</span>
-                        <span class="project-tag">Redux Toolkit</span>
-                        <span class="project-tag">REST API</span>
-                    </div>
-                    <a href="https://heroic-cupcake-7a36a6.netlify.app/" target="_blank" class="btn btn-primary">View Project</a>
-                </div>
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <img src="./resume_analyser.png" alt="AI Resume Analyzer" />
+          <div class="project-info">
+            <h3>AI Resume Analyzer</h3>
+            <p>
+              AI powered web application that analyzes resumes, extracts key
+              skills and experience, and helps recruiters shortlist candidates
+              efficiently.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">TypeScript</span>
+              <span class="project-tag">Tailwind CSS</span>
+              <span class="project-tag">OpenAI API</span>
             </div>
-            <div class="project-card">
-                <img src="./adminPage.png" alt="Admin Dashboard">
-                <div class="project-info">
-                    <h3>Admin Dashboard</h3>
-                    <p>Comprehensive admin panel with data visualization and management capabilities.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">React</span>
-                        <span class="project-tag">Material UI</span>
-                        <span class="project-tag">Charts</span>
-                    </div>
-                    <a href="https://scintillating-granita-5823dd.netlify.app/" target="_blank" class="btn btn-primary">View Project</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="./Clothing-web.png" alt="E-commerce Store">
-                <div class="project-info">
-                    <h3>E-commerce Clothing Store</h3>
-                    <p>Modern e-commerce platform with shopping cart, product filters, and checkout functionality.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">HTML/CSS</span>
-                        <span class="project-tag">Responsive</span>
-                    </div>
-                    <a href="https://elizabethsobiya.github.io/Clothing-web/" target="_blank" class="btn btn-primary">View Project</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="./food-meal-web.png" alt="Food Recipe App">
-                <div class="project-info">
-                    <h3>Recipe Finder Application</h3>
-                    <p>Interactive food recipe app with search functionality and detailed cooking instructions with video tutorials.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">API Integration</span>
-                        <span class="project-tag">Modal UI</span>
-                    </div>
-                    <a href="https://elizabethsobiya.github.io/Food-meal-web/" target="_blank" class="btn btn-primary">View Project</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="./bootstrap.png" alt="Bootstrap Landing">
-                <div class="project-info">
-                    <h3>Responsive Landing Page</h3>
-                    <p>Modern, fully responsive landing page built with Bootstrap 5 and contemporary design patterns.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">Bootstrap 5</span>
-                        <span class="project-tag">Responsive</span>
-                        <span class="project-tag">Modern UI</span>
-                    </div>
-                    <a href="https://elizabethsobiya.github.io/bootstrap5/" target="_blank" class="btn btn-primary">View Project</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="./Edyoda Stories.png" alt="EdYoda Stories">
-                <div class="project-info">
-                    <h3>EdYoda Stories Platform</h3>
-                    <p>Content platform showcasing educational stories with elegant UI and smooth navigation.</p>
-                    <div class="project-tags">
-                        <span class="project-tag">React</span>
-                        <span class="project-tag">Redux</span>
-                        <span class="project-tag">Content Management</span>
-                    </div>
-                    <a href="https://elizabethsobiya.github.io/EdYoda-Stories/" target="_blank" class="btn btn-primary">View Project</a>
-                </div>
-            </div>
+            <a
+              href="https://ai-resume-analyser-frontend.vercel.app/"
+              target="_blank"
+              class="btn btn-primary"
+              >View Project</a
+            >
+          </div>
         </div>
+
+        <div class="project-card">
+          <img src="./adminPage.png" alt="Admin Dashboard" />
+          <div class="project-info">
+            <h3>Admin Dashboard</h3>
+            <p>
+              Comprehensive admin panel with data visualization and management
+              capabilities.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Material UI</span>
+              <span class="project-tag">Charts</span>
+            </div>
+            <a
+              href="https://scintillating-granita-5823dd.netlify.app/"
+              target="_blank"
+              class="btn btn-primary"
+              >View Project</a
+            >
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="./Clothing-web.png" alt="E-commerce Store" />
+          <div class="project-info">
+            <h3>E-commerce Clothing Store</h3>
+            <p>
+              Modern e-commerce platform with shopping cart, product filters,
+              and checkout functionality.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">HTML/CSS</span>
+              <span class="project-tag">Responsive</span>
+            </div>
+            <a
+              href="https://elizabethsobiya.github.io/Clothing-web/"
+              target="_blank"
+              class="btn btn-primary"
+              >View Project</a
+            >
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="./food-meal-web.png" alt="Food Recipe App" />
+          <div class="project-info">
+            <h3>Recipe Finder Application</h3>
+            <p>
+              Interactive food recipe app with search functionality and detailed
+              cooking instructions with video tutorials.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">API Integration</span>
+              <span class="project-tag">Modal UI</span>
+            </div>
+            <a
+              href="https://elizabethsobiya.github.io/Food-meal-web/"
+              target="_blank"
+              class="btn btn-primary"
+              >View Project</a
+            >
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="./bootstrap.png" alt="Bootstrap Landing" />
+          <div class="project-info">
+            <h3>Responsive Landing Page</h3>
+            <p>
+              Modern, fully responsive landing page built with Bootstrap 5 and
+              contemporary design patterns.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Bootstrap 5</span>
+              <span class="project-tag">Responsive</span>
+              <span class="project-tag">Modern UI</span>
+            </div>
+            <a
+              href="https://elizabethsobiya.github.io/bootstrap5/"
+              target="_blank"
+              class="btn btn-primary"
+              >View Project</a
+            >
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="./Edyoda Stories.png" alt="EdYoda Stories" />
+          <div class="project-info">
+            <h3>EdYoda Stories Platform</h3>
+            <p>
+              Content platform showcasing educational stories with elegant UI
+              and smooth navigation.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Redux</span>
+              <span class="project-tag">Content Management</span>
+            </div>
+            <a
+              href="https://elizabethsobiya.github.io/EdYoda-Stories/"
+              target="_blank"
+              class="btn btn-primary"
+              >View Project</a
+            >
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact">
-        <h2 class="section-title">Let's Connect</h2>
-        <div class="contact-content">
-            <div class="contact-info">
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <div>
-                        <h4>Email</h4>
-                        <p>ellizabethsobiya@gmail.com</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📱</div>
-                    <div>
-                        <h4>Phone</h4>
-                        <p><a href="https://wa.me/+919791583755" target="_blank" style="color: var(--text); text-decoration: none;">+91 9791583755</a></p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📍</div>
-                    <div>
-                        <h4>Location</h4>
-                        <p>Bellandur, Bengaluru, India</p>
-                    </div>
-                </div>
+      <h2 class="section-title">Let's Connect</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <h4>Email</h4>
+              <p>ellizabethsobiya@gmail.com</p>
             </div>
-            <form class="contact-form" method="POST" action="https://formspree.io/f/mpzgnakp">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="_replyto" required>
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" name="number">
-                </div>
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea name="message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
-            </form>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div>
+              <h4>Phone</h4>
+              <p>
+                <a
+                  href="https://wa.me/+919791583755"
+                  target="_blank"
+                  style="color: var(--text); text-decoration: none"
+                  >+91 9791583755</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h4>Location</h4>
+              <p>Bellandur, Bengaluru, India</p>
+            </div>
+          </div>
         </div>
+        <form
+          class="contact-form"
+          method="POST"
+          action="https://formspree.io/f/mpzgnakp"
+        >
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="_replyto" required />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" name="number" />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            Send Message
+          </button>
+        </form>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Elizabeth Sobiya. Crafted with passion and code.</p>
+      <p>&copy; 2026 Elizabeth Sobiya. Crafted with passion and code.</p>
     </footer>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
         });
+      });
 
-        // Navbar scroll effect
-        let lastScroll = 0;
-        const nav = document.querySelector('nav');
-        
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.style.background = 'rgba(15, 23, 42, 0.98)';
-                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-            } else {
-                nav.style.background = 'rgba(15, 23, 42, 0.95)';
-                nav.style.boxShadow = 'none';
-            }
-            
-            lastScroll = currentScroll;
+      // Navbar scroll effect
+      let lastScroll = 0;
+      const nav = document.querySelector("nav");
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 100) {
+          nav.style.background = "rgba(15, 23, 42, 0.98)";
+          nav.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
+        } else {
+          nav.style.background = "rgba(15, 23, 42, 0.95)";
+          nav.style.boxShadow = "none";
+        }
+
+        lastScroll = currentScroll;
+      });
+
+      // Intersection Observer for fade-in animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
         });
+      }, observerOptions);
 
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all project cards and skill categories
-        document.querySelectorAll('.project-card, .skill-category').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
+      // Observe all project cards and skill categories
+      document
+        .querySelectorAll(".project-card, .skill-category")
+        .forEach((el) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(30px)";
+          el.style.transition = "all 0.6s ease-out";
+          observer.observe(el);
         });
     </script>
-</body>
+  </body>
 </html>
